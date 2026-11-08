@@ -38,7 +38,7 @@ err = goOpenRC.DeleteService("my-app")
 | Function | Does |
 | --- | --- |
 | `CreateService(*Service) error` | Write init script, `rc-update add`, `rc-service start` |
-| `DeleteService(name string) error` | `rc-service stop`, `rc-update -a delete`, remove script |
+| `DeleteService(name string) error` | `rc-service stop`, `rc-update delete` per runlevel, remove script |
 | `StartService(name string) error` | `rc-service start` |
 | `StopService(name string) error` | `rc-service stop` |
 | `RestartService(name string) error` | `rc-service restart` |

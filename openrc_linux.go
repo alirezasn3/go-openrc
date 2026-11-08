@@ -241,9 +241,11 @@ func DeleteService(name string) error {
 		return e
 	}
 
-	// remove service from every runlevel it was added to
-	if status.Enabled {
-		if _, e = run("rc-update", "-a", "delete", status.Name); e != nil {
+	// remove service from every runlevel it was added to. `rc-update -a delete`
+	// would do this in one call, but it exits non-zero after warning about each
+	// runlevel the service was not in, so delete the known ones individually.
+	for _, level := range status.Runlevels {
+		if _, e = run("rc-update", "delete", status.Name, level); e != nil {
 			return e
 		}
 	}
