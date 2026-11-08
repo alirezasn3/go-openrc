@@ -123,6 +123,24 @@ error_log='/var/log/my-app.log'
   cross-compiles. `InitScript()` works everywhere.
 - Installing a service needs root.
 
+## Tests
+
+Script generation and the systemd mapping are covered by plain unit tests, which
+run anywhere:
+
+```sh
+go test ./...
+```
+
+The integration tests drive real `rc-service` and `rc-update`, so they sit
+behind a build tag and need root on an OpenRC machine. They install and remove a
+service called `gopenrc-integration`, and cover install, runlevel registration,
+status parsing, respawn after the daemon is killed, stop and delete:
+
+```sh
+go test -tags openrc_integration -v
+```
+
 ## License
 
 MIT
